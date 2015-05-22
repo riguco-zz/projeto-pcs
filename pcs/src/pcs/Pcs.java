@@ -5,6 +5,8 @@
  */
 package pcs;
 
+import Views.login;
+
 /**
  *
  * @author riguco
@@ -15,11 +17,6 @@ public class Pcs {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        //teste
-        //teste Thadeu
-        //teste do ricardo
-        //teste aline
+        new login(null, true).show();
     }
-    
 }
