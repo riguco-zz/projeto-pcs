@@ -30,12 +30,21 @@ public class AlunoFrame extends javax.swing.JFrame {
         botaoRelatorio = new javax.swing.JButton();
         botaoIniciar = new javax.swing.JButton();
         botaoSair = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(270, 270));
+        setMinimumSize(new java.awt.Dimension(130, 130));
+        setSize(new java.awt.Dimension(140, 140));
 
         botaoRelatorio.setText("Relatório");
 
         botaoIniciar.setText("Iniciar Sessão");
+        botaoIniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoIniciarActionPerformed(evt);
+            }
+        });
 
         botaoSair.setText("Sair");
         botaoSair.addActionListener(new java.awt.event.ActionListener() {
@@ -44,29 +53,36 @@ public class AlunoFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Seja Bem Vindo");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(botaoRelatorio)
-                .addGap(45, 45, 45)
-                .addComponent(botaoIniciar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botaoSair)
-                .addContainerGap())
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(botaoSair)
+                            .addComponent(botaoRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botaoIniciar)
+                            .addComponent(jLabel1))
+                        .addContainerGap(20, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoRelatorio)
-                    .addComponent(botaoIniciar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(19, 19, 19)
+                .addComponent(botaoIniciar)
+                .addGap(18, 18, 18)
+                .addComponent(botaoRelatorio)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addComponent(botaoSair)
                 .addContainerGap())
         );
@@ -78,6 +94,12 @@ public class AlunoFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_botaoSairActionPerformed
+
+    private void botaoIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoIniciarActionPerformed
+       this.dispose();
+            SessaoFrame mm = new SessaoFrame();
+                mm.show();
+    }//GEN-LAST:event_botaoIniciarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -118,5 +140,6 @@ public class AlunoFrame extends javax.swing.JFrame {
     private javax.swing.JButton botaoIniciar;
     private javax.swing.JButton botaoRelatorio;
     private javax.swing.JButton botaoSair;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
