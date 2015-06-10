@@ -5,7 +5,7 @@
  */
 package pcs;
 
-import Views.login;
+import Views.LoginFrame;
 
 /**
  *
@@ -14,6 +14,6 @@ import Views.login;
 public class Pcs {
 
     public static void main(String[] args) {
-        new login(null, true).show();
+        new LoginFrame(null, true).show();
     }
 }

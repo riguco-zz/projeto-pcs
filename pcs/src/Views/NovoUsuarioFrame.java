@@ -227,7 +227,7 @@ public class NovoUsuarioFrame extends javax.swing.JFrame {
     if (reply == JOptionPane.YES_OPTION)          
        {        
         this.dispose();
-                login dialog = new login(new javax.swing.JFrame(), true);
+                LoginFrame dialog = new LoginFrame(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

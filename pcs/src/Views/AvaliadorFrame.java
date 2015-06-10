@@ -98,7 +98,7 @@ public class AvaliadorFrame extends javax.swing.JFrame {
 
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
         this.dispose();
-                login dialog = new login(new javax.swing.JFrame(), true);
+                LoginFrame dialog = new LoginFrame(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
