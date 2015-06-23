@@ -133,6 +133,7 @@ public class AlunoFrame extends javax.swing.JFrame {
         if (rs.next()){
             RelatorioFrame mm = new RelatorioFrame();
             mm.getid(idaluno);
+            mm.getnome(rs.getString("nome"));
             mm.preenchertabela();
             mm.campoNome.setText(rs.getString("nome"));
             mm.campoNome.setEditable(false);

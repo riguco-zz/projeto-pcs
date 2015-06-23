@@ -10,6 +10,7 @@ import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabe
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,7 +25,14 @@ public class RelatorioFrame extends javax.swing.JFrame {
     int idaluno;
     public void getid (int id){
         idaluno = id;
+    
     }
+    String Nome;
+    public void getnome (String nome){
+        Nome = nome;
+    
+    }
+   
     public void preenchertabela(){
     String sql = "select * from sessao where id_pessoa=?";
         String sql2 = "select count(*) as totaldequestoes from resposta where id_sessao=?";
@@ -120,6 +128,11 @@ public class RelatorioFrame extends javax.swing.JFrame {
         jLabel2.setText("Digite o ID:");
 
         botaoConsultar.setText("Consultar");
+        botaoConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoConsultarActionPerformed(evt);
+            }
+        });
 
         botaoVoltar.setText("Voltar");
 
@@ -166,6 +179,38 @@ public class RelatorioFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botaoConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConsultarActionPerformed
+        this.setVisible(false);
+        int valor;
+        String s = campoID.getText();
+        if(s==null) 
+            JOptionPane.showMessageDialog(null, "Por favor, insira um ID ");
+        else{
+            valor=Integer.parseInt(s);
+            String sqlrelatorio = "select * from resposta where id_sessao=?";
+            try {
+                PreparedStatement ps =conn.prepareStatement(sqlrelatorio);
+                ps.setInt(1, valor);
+                ResultSet rs = ps.executeQuery();
+
+            if (rs.next()){
+                Resolucao2Frame mm = new Resolucao2Frame();
+                mm.getid(idaluno);
+                mm.campoNome.setText(Nome);
+                mm.campoNome.setEditable(false);
+                mm.show();
+                mm.setLocationRelativeTo(null);
+
+
+            }
+            }
+
+            catch (Exception e){
+            System.out.println(e.getMessage());        
+            }
+        }
+    }//GEN-LAST:event_botaoConsultarActionPerformed
 
     /**
      * @param args the command line arguments
