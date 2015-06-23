@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 /**
  *
@@ -20,7 +21,11 @@ Connection conn = new criaConexao().connect();
     public LoginFrame(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        getRootPane().setDefaultButton(botaoEntrar);
+        UIManager.put("Button.defaultButtonFollowFocus", true);
         setLocationRelativeTo (this);
+        setResizable(false);
+        
     }
 
     /**
@@ -39,24 +44,30 @@ Connection conn = new criaConexao().connect();
         campoEmail = new javax.swing.JTextField();
         botaoEntrar = new javax.swing.JButton();
         botaoNovo = new javax.swing.JButton();
-        botaoSair = new javax.swing.JButton();
         campoSenha = new javax.swing.JPasswordField();
+        botaoSair = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         jPasswordField1.setText("jPasswordField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(270, 270));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("E-mail");
+        jLabel1.setText("E-mail:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 51, -1, -1));
 
-        jLabel2.setText("Senha");
+        jLabel2.setText("Senha:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 85, -1, -1));
 
         campoEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoEmailActionPerformed(evt);
             }
         });
+        getContentPane().add(campoEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 45, 171, -1));
 
         botaoEntrar.setText("Entrar");
         botaoEntrar.addActionListener(new java.awt.event.ActionListener() {
@@ -64,6 +75,7 @@ Connection conn = new criaConexao().connect();
                 botaoEntrarActionPerformed(evt);
             }
         });
+        getContentPane().add(botaoEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 170, -1));
 
         botaoNovo.setText("Novo usuário");
         botaoNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -71,6 +83,14 @@ Connection conn = new criaConexao().connect();
                 botaoNovoActionPerformed(evt);
             }
         });
+        getContentPane().add(botaoNovo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 170, -1));
+
+        campoSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoSenhaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(campoSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 79, 171, -1));
 
         botaoSair.setText("Sair");
         botaoSair.addActionListener(new java.awt.event.ActionListener() {
@@ -78,63 +98,12 @@ Connection conn = new criaConexao().connect();
                 botaoSairActionPerformed(evt);
             }
         });
-
-        campoSenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoSenhaActionPerformed(evt);
-            }
-        });
+        getContentPane().add(botaoSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 90, -1));
 
         jLabel3.setText("Simulado de Matemática");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(50, 50, 50))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(botaoSair)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(18, 18, 18)
-                            .addComponent(campoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(botaoNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(botaoEntrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(campoSenha))))))
-                .addContainerGap(26, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(campoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(botaoEntrar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(botaoNovo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                .addComponent(botaoSair)
-                .addContainerGap())
-        );
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 12, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, -1, -1));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 60, 20));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -148,14 +117,22 @@ Connection conn = new criaConexao().connect();
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 int perfil = rs.getInt("avaliador");
+                int pessoaid = rs.getInt("id_pessoa");
+                System.out.println("pessoa ID " + pessoaid);
                 if(perfil == 1){
                     this.dispose();
                     AvaliadorFrame mm = new AvaliadorFrame();
+                    mm.setResizable(false);
+                    mm.setLocationRelativeTo(null);
                     mm.show();
                 }
-                else{
-                    this.dispose();
+                else{                    
                     AlunoFrame mm = new AlunoFrame();
+                    mm.getid(pessoaid);
+                    System.out.println("Else pessoa ID " + pessoaid);
+                    mm.setResizable(false);
+                    mm.setLocationRelativeTo(null);
+                    this.dispose();
                     mm.show();
                 }          
             }
@@ -165,7 +142,7 @@ Connection conn = new criaConexao().connect();
             }
         }
         catch (Exception e){
-        
+        System.out.println(e.getMessage());
         
         }
     }//GEN-LAST:event_botaoEntrarActionPerformed
@@ -186,6 +163,8 @@ Connection conn = new criaConexao().connect();
     private void botaoNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoActionPerformed
         this.dispose();
                 NovoUsuarioFrame mm = new NovoUsuarioFrame();
+                mm.setResizable(false);
+                mm.setLocationRelativeTo(null);
                 mm.show(); 
     }//GEN-LAST:event_botaoNovoActionPerformed
 
@@ -242,6 +221,8 @@ Connection conn = new criaConexao().connect();
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

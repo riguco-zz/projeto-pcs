@@ -5,12 +5,52 @@
  */
 package Views;
 
+import BDConexao.criaConexao;
+import static Views.SessaoFrame.comboTipo;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.swing.ButtonModel;
+import javax.swing.JOptionPane;
+import pcs.Questao;
+
 /**
  *
- * @author riguco
+ * @author aline
  */
 public class Sessao2Frame extends javax.swing.JFrame {
-    int vTipo, vQuantidade, vNivel; /* Estas variaveis recebem de sessaoFrame */
+    
+    Connection conn = new criaConexao().connect();
+    int totaldequestoes, indiceatual, idsessao, idaluno, quantidadeacertos;
+    Questao questao;
+    List<Questao> questoes; 
+    
+    public void iniciajanela(int indiceatual, int totaldequestoes, int idsessao, int idaluno, List<Questao> questoes, int quantidadeacertos){
+        this.indiceatual = indiceatual;
+        this.totaldequestoes = totaldequestoes;
+        this.idsessao = idsessao;
+        this.idaluno = idaluno;
+        questao = questoes.get(indiceatual);
+        this.questoes = questoes;
+        this.quantidadeacertos = quantidadeacertos;
+        
+        this.campoPergunta.setText(questao.getPergunta());
+        this.campoPergunta.setEditable(false);
+        this.resposta1.setText(questao.getResposta1());
+        this.resposta1.setEditable(false);
+        this.resposta2.setText(questao.getResposta2());
+        this.resposta2.setEditable(false);
+        this.resposta3.setText(questao.getResposta3());
+        this.resposta3.setEditable(false);
+        this.resposta4.setText(questao.getResposta4());
+        this.resposta4.setEditable(false);
+        this.setVisible(true);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+    }
     /**
      * Creates new form Sessao2Frame
      */
@@ -30,21 +70,17 @@ public class Sessao2Frame extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jRadioButton2 = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         radio1 = new javax.swing.JRadioButton();
         radio2 = new javax.swing.JRadioButton();
         radio3 = new javax.swing.JRadioButton();
         radio4 = new javax.swing.JRadioButton();
         campoPergunta = new javax.swing.JTextField();
-        botaoConfirmar = new javax.swing.JButton();
+        botaoProxima = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        resposta1 = new javax.swing.JTextField();
+        resposta2 = new javax.swing.JTextField();
+        resposta3 = new javax.swing.JTextField();
+        resposta4 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
 
         jRadioButton2.setText("jRadioButton2");
@@ -53,25 +89,37 @@ public class Sessao2Frame extends javax.swing.JFrame {
 
         jLabel1.setText("Pergunta");
 
-        jLabel2.setText("A)");
-
-        jLabel3.setText("B)");
-
-        jLabel4.setText("C)");
-
-        jLabel5.setText("D)");
-
         buttonGroup1.add(radio1);
+        radio1.setText("A)");
 
         buttonGroup1.add(radio2);
+        radio2.setText("B)");
 
         buttonGroup1.add(radio3);
+        radio3.setText("C)");
 
         buttonGroup1.add(radio4);
+        radio4.setText("D)");
 
-        botaoConfirmar.setText("Confirmar");
+        campoPergunta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoPerguntaActionPerformed(evt);
+            }
+        });
+
+        botaoProxima.setText("Próxima");
+        botaoProxima.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoProximaActionPerformed(evt);
+            }
+        });
 
         botaoCancelar.setText("Cancelar");
+        botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCancelarActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Marque a Alternativa Correta");
 
@@ -88,37 +136,36 @@ public class Sessao2Frame extends javax.swing.JFrame {
                         .addComponent(campoPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(radio3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(radio4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(resposta3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(resposta4)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(radio1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(radio2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(radio3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(radio4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel5)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(radio1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(resposta1))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(radio2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(resposta2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botaoCancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botaoConfirmar)
-                .addGap(105, 105, 105))
+                .addGap(188, 188, 188)
+                .addComponent(botaoCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botaoProxima)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,51 +173,173 @@ public class Sessao2Frame extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(campoPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoPergunta, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(radio1)
-                            .addComponent(jLabel2))
-                        .addGap(5, 5, 5))
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(radio2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(radio3)
-                                .addGap(12, 12, 12)
-                                .addComponent(radio4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(30, 30, 30)
+                        .addComponent(radio1)
+                        .addGap(23, 23, 23))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(resposta1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(resposta2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(radio2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(radio3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(resposta3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoConfirmar)
+                    .addComponent(radio4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(resposta4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoProxima)
                     .addComponent(botaoCancelar))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botaoProximaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProximaActionPerformed
+        String selected = "Not Selected";
+        int selecionado = 4;
+        boolean acertou = false;
+        
+        if (radio1.isSelected())
+           selecionado = 0;
+            
+        if (radio2.isSelected())
+           selecionado = 1; 
+            
+        if (radio3.isSelected())
+           selecionado = 2; 
+            
+        if (radio4.isSelected())
+            selecionado = 3;
+            System.out.println(selecionado);
+        if (selecionado != 4){
+            if (selecionado == questao.getIndiceresposta()){
+                acertou = true;
+                quantidadeacertos++;
+            }
+        String sqlinserteresposta = "insert into resposta (id_sessao, id_pergunta, acertou, resposta)"
+                + "values(?,?,?,?)";
+        
+        try {
+                
+                PreparedStatement ps = conn.prepareStatement(sqlinserteresposta);
+                ps.setInt(1, idsessao);
+                ps.setInt(2, questao.getId());
+                ps.setBoolean(3, acertou);
+                ps.setInt(4, selecionado);
+                ps.executeUpdate();
+                
+                this.dispose();
+               
+                if (indiceatual < totaldequestoes - 1){
+
+                    
+                    Sessao2Frame mm = new Sessao2Frame();
+                    mm.iniciajanela(indiceatual + 1, questoes.size(), idsessao, idaluno, questoes,quantidadeacertos);
+                    mm.setLocationRelativeTo(null);
+                }
+                
+                else {
+                   try {
+               
+                        String sqlupdatesessao = "update sessao set data_fim=?, acertos=? where id_sessao=?";
+
+                        Date hoje = new Date(); 
+                        java.sql.Date hojesql = new java.sql.Date(hoje.getTime());
+                        PreparedStatement ps2 = conn.prepareStatement(sqlupdatesessao);
+                        ps2.setDate(1, hojesql);
+                        ps2.setInt(2, quantidadeacertos);
+                        ps2.setInt(3, idsessao);
+                        ps2.executeUpdate();
+                   }
+                   catch (Exception e){
+                
+                System.out.println(e.getMessage());
+
+            }
+                   
+                   
+                   JOptionPane.showMessageDialog(null, "parabéns você acertou " + quantidadeacertos + " de " + totaldequestoes);
+                    AlunoFrame mm = new AlunoFrame();
+                    mm.show();
+                    mm.setLocationRelativeTo(null);
+                    mm.setResizable(false);
+                }
+            }
+            catch (Exception e){
+                
+                System.out.println(e.getMessage());
+
+            }
+            
+        }
+        else
+           JOptionPane.showMessageDialog(null, "Nenhuma opção marcada"); 
+        
+        
+            
+            
+            
+    }//GEN-LAST:event_botaoProximaActionPerformed
+
+    private void campoPerguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoPerguntaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoPerguntaActionPerformed
+
+    private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
+        String message = "Você perderá Todo o seu progresso, deseja realmente sair?";
+        String title = "Descartar Alterações";
+    // display the JOptionPane showConfirmDialog
+    int reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
+    if (reply == JOptionPane.YES_OPTION)          
+       {        
+         String sqldeletesessao = "delete from sessao where id_sessao = ?";
+         String sqlselectresposta = "select * from resposta where id_sessao = ?";
+         String sqldeleteresposta = "delete from resposta where id_sessao = ?";
+         
+         try{
+                PreparedStatement ps = conn.prepareStatement(sqldeletesessao);
+                ps.setInt(1, idsessao);
+                ps.executeUpdate();
+                
+                PreparedStatement ps2 = conn.prepareStatement(sqlselectresposta);
+                ps2.setInt(1, idsessao);
+                ResultSet rs = ps2.executeQuery();
+                if(rs.next()){
+                    PreparedStatement ps3 = conn.prepareStatement(sqldeleteresposta);
+                    ps3.setInt(1, idsessao);
+                    ps3.executeUpdate();
+                
+                }
+                
+                
+                
+         }
+         catch (Exception e){
+                
+                System.out.println(e.getMessage());
+
+            }
+         
+         
+           this.dispose();
+                AlunoFrame mm = new AlunoFrame();
+                    mm.show();
+                    mm.setLocationRelativeTo(null);
+                    mm.setResizable(false);
+                
+       }
+    }//GEN-LAST:event_botaoCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -212,23 +381,19 @@ public class Sessao2Frame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
-    private javax.swing.JButton botaoConfirmar;
+    private javax.swing.JButton botaoProxima;
     private javax.swing.ButtonGroup buttonGroup1;
-    public static javax.swing.JTextField campoPergunta;
+    public javax.swing.JTextField campoPergunta;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JRadioButton radio1;
     private javax.swing.JRadioButton radio2;
     private javax.swing.JRadioButton radio3;
     private javax.swing.JRadioButton radio4;
+    public javax.swing.JTextField resposta1;
+    public javax.swing.JTextField resposta2;
+    public javax.swing.JTextField resposta3;
+    public javax.swing.JTextField resposta4;
     // End of variables declaration//GEN-END:variables
 }

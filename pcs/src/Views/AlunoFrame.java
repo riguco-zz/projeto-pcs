@@ -5,17 +5,29 @@
  */
 package Views;
 
+import BDConexao.criaConexao;
+import static Views.SessaoFrame.comboTipo;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 /**
  *
- * @author riguco
+ * @author Thadeu
  */
 public class AlunoFrame extends javax.swing.JFrame {
-
+    Connection conn = new criaConexao().connect();
     /**
      * Creates new form AlunoFrame
      */
+    int idaluno;
+    public void getid (int pessoaid){
+        idaluno = pessoaid;
+        
+    }    
     public AlunoFrame() {
-        initComponents();
+        initComponents(); 
+        
     }
 
     /**
@@ -33,11 +45,15 @@ public class AlunoFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(270, 270));
         setMinimumSize(new java.awt.Dimension(130, 130));
         setSize(new java.awt.Dimension(140, 140));
 
         botaoRelatorio.setText("Relatório");
+        botaoRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoRelatorioActionPerformed(evt);
+            }
+        });
 
         botaoIniciar.setText("Iniciar Sessão");
         botaoIniciar.addActionListener(new java.awt.event.ActionListener() {
@@ -60,27 +76,27 @@ public class AlunoFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(botaoSair)
-                            .addComponent(botaoRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(botaoRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botaoIniciar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botaoSair))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(botaoIniciar)
-                            .addComponent(jLabel1))
-                        .addContainerGap(20, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 22, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(57, 57, 57))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(19, 19, 19)
+                .addGap(25, 25, 25)
                 .addComponent(botaoIniciar)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(botaoRelatorio)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addComponent(botaoSair)
@@ -98,8 +114,43 @@ public class AlunoFrame extends javax.swing.JFrame {
     private void botaoIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoIniciarActionPerformed
        this.dispose();
             SessaoFrame mm = new SessaoFrame();
+                mm.getid(idaluno);
+                mm.setResizable(false);
+                mm.setLocationRelativeTo(null);
                 mm.show();
     }//GEN-LAST:event_botaoIniciarActionPerformed
+
+    private void botaoRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRelatorioActionPerformed
+        this.setVisible(false);
+        String sql = "select * from pessoa where id_pessoa=?";
+        try {
+            PreparedStatement ps =conn.prepareStatement(sql);
+            ps.setInt(1, idaluno);
+            ResultSet rs = ps.executeQuery();
+            
+            
+            
+        if (rs.next()){
+            RelatorioFrame mm = new RelatorioFrame();
+            mm.getid(idaluno);
+            mm.preenchertabela();
+            mm.campoNome.setText(rs.getString("nome"));
+            mm.campoNome.setEditable(false);
+        mm.show();
+        mm.setLocationRelativeTo(null);
+        
+        
+        }
+        }
+        
+        catch (Exception e){
+        System.out.println(e.getMessage());        
+        }
+        
+        
+        
+        
+    }//GEN-LAST:event_botaoRelatorioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -131,7 +182,7 @@ public class AlunoFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AlunoFrame().setVisible(true);
+                new AlunoFrame().setVisible(true);                
             }
         });
     }
@@ -143,3 +194,5 @@ public class AlunoFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
+
+

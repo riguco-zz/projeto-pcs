@@ -6,20 +6,30 @@
 package Views;
 
 import BDConexao.criaConexao;
+import java.util.List;
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import pcs.Questao;
 
 /**
  *
- * @author riguco
+ * @author aline
  */
 public class SessaoFrame extends javax.swing.JFrame {
     Connection conn = new criaConexao().connect();
     /**
      * Creates new form SessaoFrame
      */
+    int idaluno;
+    public void getid (int id){
+        idaluno = id;
+    }
+    
     public SessaoFrame() {
         initComponents();
     }
@@ -33,6 +43,7 @@ public class SessaoFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDesktopPane1 = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -124,12 +135,55 @@ public class SessaoFrame extends javax.swing.JFrame {
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
         this.dispose();
             AlunoFrame mm = new AlunoFrame();
-                mm.show();                
+                mm.show();
+                mm.setLocationRelativeTo(null);
         
     }//GEN-LAST:event_botaoVoltarActionPerformed
 
     private void BotaoIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoIniciarActionPerformed
-           
+    String sql = "select * from questao where tipoquestao=? and nivel=? order by rand() limit ?";
+        try {
+            PreparedStatement ps =conn.prepareStatement(sql);
+            ps.setInt(1, comboTipo.getSelectedIndex());
+            ps.setInt(2, comboNivel.getSelectedIndex());
+            ps.setInt(3, Integer.parseInt((String)comboQuantidade.getSelectedItem()));
+            ResultSet rs = ps.executeQuery();
+            List<Questao> questoes = new ArrayList<Questao>();
+            
+            while (rs.next()){
+                Questao questao = new Questao(rs.getInt("idquestao"),rs.getInt("tipoquestao"),rs.getInt("nivel"),rs.getInt("indiceresposta"),rs.getString("pergunta"),rs.getString("resposta1"),rs.getString("resposta2"),rs.getString("resposta3"),rs.getString("resposta4"),rs.getString("resolucao"));
+                questoes.add(questao);
+                
+            }
+            
+            String sqlinsertesessao = "insert into sessao (id_pessoa, data_inicio, tipoquestao, nivel)"
+                + "values(?,?,?,?)";
+            
+                Date hoje = new Date(); 
+                java.sql.Date hojesql = new java.sql.Date(hoje.getTime());
+                ps = conn.prepareStatement(sqlinsertesessao, Statement.RETURN_GENERATED_KEYS);
+                ps.setInt(1, idaluno);
+                ps.setDate(2, hojesql);
+                ps.setInt(3, comboTipo.getSelectedIndex());
+                ps.setInt(4, comboNivel.getSelectedIndex());
+                ps.executeUpdate();
+                rs =  ps.getGeneratedKeys();
+                rs.next();
+                int idsessao = rs.getInt(1);
+                
+                System.out.println("idsessao: " + idsessao);
+                   
+            this.setVisible(false);
+            Sessao2Frame mm = new Sessao2Frame();
+            mm.iniciajanela(0, questoes.size(), idsessao, idaluno, questoes,0);
+            mm.setLocationRelativeTo(null);
+        }
+            
+        
+        catch (Exception e){
+        System.out.println(e.getMessage());
+        
+        }       
     }//GEN-LAST:event_BotaoIniciarActionPerformed
 
     /**
@@ -173,6 +227,7 @@ public class SessaoFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox comboNivel;
     private javax.swing.JComboBox comboQuantidade;
     public static javax.swing.JComboBox comboTipo;
+    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

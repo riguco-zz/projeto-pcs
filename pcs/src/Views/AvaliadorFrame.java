@@ -112,7 +112,8 @@ public class AvaliadorFrame extends javax.swing.JFrame {
        
        this.dispose();
                     QuestaoFrame mm = new QuestaoFrame();
-                    mm.show(); 
+                    mm.show();
+                    mm.setLocationRelativeTo(null);
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
     /**

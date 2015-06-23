@@ -266,6 +266,7 @@ public class QuestaoFrame extends javax.swing.JFrame {
        this.dispose();
                     AvaliadorFrame mm = new AvaliadorFrame();
                     mm.show();
+                    mm.setLocationRelativeTo(null);
     }//GEN-LAST:event_botaoVoltarActionPerformed
 
     private void comboTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTipoActionPerformed
