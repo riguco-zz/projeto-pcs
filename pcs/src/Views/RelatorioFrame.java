@@ -22,7 +22,7 @@ public class RelatorioFrame extends javax.swing.JFrame {
     /**
      * Creates new form RelatorioFrame
      */
-    int idaluno;
+    int idaluno,idsessao;
     public void getid (int id){
         idaluno = id;
     
@@ -32,6 +32,7 @@ public class RelatorioFrame extends javax.swing.JFrame {
         Nome = nome;
     
     }
+    
    
     public void preenchertabela(){
     String sql = "select * from sessao where id_pessoa=?";
@@ -42,6 +43,7 @@ public class RelatorioFrame extends javax.swing.JFrame {
             ps.setInt(1, idaluno);
             ResultSet rs = ps.executeQuery();
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            
             while (rs.next()){                        
                 int tipoint = rs.getInt("tipoquestao");
                 int tiponivel = rs.getInt("nivel");
@@ -60,7 +62,7 @@ public class RelatorioFrame extends javax.swing.JFrame {
                     nivelstring = "Médio";
                 if(tiponivel == 2)
                     nivelstring = "Difícil";
-                
+                                
                 PreparedStatement ps2 =conn.prepareStatement(sql2);
                 ps2.setInt(1, rs.getInt("id_sessao"));
                 ResultSet rs2 = ps2.executeQuery();
@@ -84,7 +86,7 @@ public class RelatorioFrame extends javax.swing.JFrame {
         catch (Exception e){
         System.out.println(e.getMessage());        
         }
-    
+        
     }    
     public RelatorioFrame() {
         initComponents();
@@ -135,6 +137,11 @@ public class RelatorioFrame extends javax.swing.JFrame {
         });
 
         botaoVoltar.setText("Voltar");
+        botaoVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -188,6 +195,7 @@ public class RelatorioFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Por favor, insira um ID ");
         else{
             valor=Integer.parseInt(s);
+            
             String sqlrelatorio = "select * from resposta where id_sessao=?";
             try {
                 PreparedStatement ps =conn.prepareStatement(sqlrelatorio);
@@ -197,8 +205,10 @@ public class RelatorioFrame extends javax.swing.JFrame {
             if (rs.next()){
                 Resolucao2Frame mm = new Resolucao2Frame();
                 mm.getid(idaluno);
+                mm.getsessao(valor);
                 mm.campoNome.setText(Nome);
                 mm.campoNome.setEditable(false);
+                mm.preenchertabela();
                 mm.show();
                 mm.setLocationRelativeTo(null);
 
@@ -211,6 +221,13 @@ public class RelatorioFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_botaoConsultarActionPerformed
+
+    private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
+        this.dispose();
+            AlunoFrame mm = new AlunoFrame();
+            mm.show();
+            mm.setLocationRelativeTo(null);
+    }//GEN-LAST:event_botaoVoltarActionPerformed
 
     /**
      * @param args the command line arguments

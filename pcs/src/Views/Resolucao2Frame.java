@@ -9,6 +9,8 @@ import BDConexao.criaConexao;
 import javax.swing.table.DefaultTableModel;
 import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -19,13 +21,53 @@ public class Resolucao2Frame extends javax.swing.JFrame {
     /**
      * Creates new form Resolucao2Frame
      */
-    int idaluno;
+    int idaluno, idsessao;
+    
     public void getid (int id){
         idaluno = id;
+    }
+    
+    public void getsessao (int idsessao){
+        idsessao = idsessao;
+    
     
     }
+    
     public Resolucao2Frame() {
         initComponents();
+    }
+    
+    public void preenchertabela(){
+        String sql = "select * from resposta where id_sessao=?";
+        String sql2 = "select * from questao where idquestao=?";
+        
+        try {
+            PreparedStatement ps =conn.prepareStatement(sql);
+            ps.setInt(1, idsessao);
+            ResultSet rs = ps.executeQuery();
+            
+            DefaultTableModel model = (DefaultTableModel) resolucaoTable.getModel();
+            
+            while (rs.next()){                        
+                                
+                PreparedStatement ps2 =conn.prepareStatement(sql2);
+                ps2.setInt(1, rs.getInt("id_pergunta"));
+                ResultSet rs2 = ps2.executeQuery();
+                rs2.next();
+                         
+                
+                model.addRow(new Object[]{rs.getInt("id_pergunta"), rs2.getString("pergunta"), rs.getInt("acertou")});
+
+
+
+            }
+
+        }
+
+        catch (Exception e){
+        System.out.println(e.getMessage());        
+        }
+    
     }
 
     /**
@@ -56,6 +98,11 @@ public class Resolucao2Frame extends javax.swing.JFrame {
         jButton1.setText("Consultar");
 
         jButton2.setText("Voltar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         resolucaoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -122,6 +169,33 @@ public class Resolucao2Frame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.setVisible(false);
+        String sql = "select * from pessoa where id_pessoa=?";
+        try {
+            PreparedStatement ps =conn.prepareStatement(sql);
+            ps.setInt(1, idaluno);
+            ResultSet rs = ps.executeQuery();
+            
+            
+            
+        if (rs.next()){
+            RelatorioFrame mm = new RelatorioFrame();
+            mm.getid(idaluno);
+            mm.getnome(rs.getString("nome"));
+            mm.preenchertabela();
+            mm.campoNome.setText(rs.getString("nome"));
+            mm.campoNome.setEditable(false);
+        mm.show();
+        mm.setLocationRelativeTo(null);
+        }
+        }
+        
+        catch (Exception e){
+        System.out.println(e.getMessage());        
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
