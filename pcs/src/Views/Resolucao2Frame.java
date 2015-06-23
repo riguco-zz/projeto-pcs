@@ -11,6 +11,7 @@ import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabe
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,15 +22,15 @@ public class Resolucao2Frame extends javax.swing.JFrame {
     /**
      * Creates new form Resolucao2Frame
      */
-    int idaluno, idsessao;
+    int idaluno, idsessao,idsessao2;
     
     public void getid (int id){
         idaluno = id;
     }
     
     public void getsessao (int idsessao){
-        idsessao = idsessao;
-    
+        idsessao2 = idsessao;
+        System.out.println("ID da Sessao Na função" + idsessao);
     
     }
     
@@ -41,22 +42,31 @@ public class Resolucao2Frame extends javax.swing.JFrame {
         String sql = "select * from resposta where id_sessao=?";
         String sql2 = "select * from questao where idquestao=?";
         
+        DefaultTableModel model = (DefaultTableModel) resolucaoTable.getModel();
+        
         try {
             PreparedStatement ps =conn.prepareStatement(sql);
-            ps.setInt(1, idsessao);
+            ps.setInt(1, idsessao2);
+            System.out.println("ID da Sessao SQL" + idsessao);
             ResultSet rs = ps.executeQuery();
             
-            DefaultTableModel model = (DefaultTableModel) resolucaoTable.getModel();
+            
             
             while (rs.next()){                        
                                 
                 PreparedStatement ps2 =conn.prepareStatement(sql2);
                 ps2.setInt(1, rs.getInt("id_pergunta"));
                 ResultSet rs2 = ps2.executeQuery();
-                rs2.next();
-                         
+                if(rs2.next());
+                int iacerto = rs.getInt("acertou");
+                String sacerto;
+                if (iacerto == 1)
+                    sacerto = "Sim";
+                else
+                    sacerto = "Não";
                 
-                model.addRow(new Object[]{rs.getInt("id_pergunta"), rs2.getString("pergunta"), rs.getInt("acertou")});
+                
+                model.addRow(new Object[]{rs.getInt("id_pergunta"), rs2.getString("pergunta"), sacerto});
 
 
 
@@ -82,7 +92,7 @@ public class Resolucao2Frame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         campoNome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        campoID2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -96,6 +106,11 @@ public class Resolucao2Frame extends javax.swing.JFrame {
         jLabel2.setText("Digite o ID:");
 
         jButton1.setText("Consultar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Voltar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -135,7 +150,7 @@ public class Resolucao2Frame extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(campoID2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jButton1)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -159,7 +174,7 @@ public class Resolucao2Frame extends javax.swing.JFrame {
                             .addComponent(jButton1)
                             .addComponent(jButton2)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(campoID2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -197,6 +212,43 @@ public class Resolucao2Frame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //this.setVisible(false);
+        int valor;
+        String s = campoID2.getText();
+        if(s==null) 
+            JOptionPane.showMessageDialog(null, "Por favor, insira um ID ");
+        else{
+            valor=Integer.parseInt(s);
+            System.out.println("valor no campo" + valor);
+            
+            String sqlquestao = "select * from questao where idquestao=?";
+            try {
+                PreparedStatement ps =conn.prepareStatement(sqlquestao);
+                ps.setInt(1, valor);
+                ResultSet rs = ps.executeQuery();
+
+            if (rs.next()){
+                ResolucaoFrame mm = new ResolucaoFrame();
+                mm.campoPergunta.setText(rs.getString("pergunta"));
+                mm.campoPergunta.setEditable(false);
+                mm.campoResolucao.setText(rs.getString("resolucao"));
+                mm.campoResolucao.setEditable(false);
+                mm.show();
+                mm.setLocationRelativeTo(null);
+
+
+            }
+            }
+
+            catch (Exception e){
+            System.out.println(e.getMessage());        
+            }
+        }
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -226,6 +278,7 @@ public class Resolucao2Frame extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Resolucao2Frame().setVisible(true);
             }
@@ -233,6 +286,7 @@ public class Resolucao2Frame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField campoID2;
     public javax.swing.JTextField campoNome;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -240,7 +294,6 @@ public class Resolucao2Frame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTable resolucaoTable;
     // End of variables declaration//GEN-END:variables
 }

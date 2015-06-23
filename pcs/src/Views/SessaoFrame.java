@@ -12,7 +12,10 @@ import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import pcs.Questao;
 
@@ -161,6 +164,12 @@ public class SessaoFrame extends javax.swing.JFrame {
             
                 Date hoje = new Date(); 
                 java.sql.Date hojesql = new java.sql.Date(hoje.getTime());
+                
+                //Locale locale = new Locale("pt","BR");
+                //GregorianCalendar calendar = new GregorianCalendar();
+                //SimpleDateFormat formatador = new SimpleDateFormat("'dd' de 'MMMMM' de 'yyyy' - 'HH':'mm'h'",locale);
+                
+                //System.out.println("Variavel Formatador" + formatador);
                 ps = conn.prepareStatement(sqlinsertesessao, Statement.RETURN_GENERATED_KEYS);
                 ps.setInt(1, idaluno);
                 ps.setDate(2, hojesql);

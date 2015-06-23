@@ -195,6 +195,7 @@ public class RelatorioFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Por favor, insira um ID ");
         else{
             valor=Integer.parseInt(s);
+            System.out.println("valor no campo" + valor);
             
             String sqlrelatorio = "select * from resposta where id_sessao=?";
             try {

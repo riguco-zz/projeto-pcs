@@ -221,7 +221,7 @@ public class Sessao2Frame extends javax.swing.JFrame {
             
         if (radio4.isSelected())
             selecionado = 3;
-            System.out.println(selecionado);
+           
         if (selecionado != 4){
             if (selecionado == questao.getIndiceresposta()){
                 acertou = true;
@@ -261,6 +261,7 @@ public class Sessao2Frame extends javax.swing.JFrame {
                         ps2.setInt(2, quantidadeacertos);
                         ps2.setInt(3, idsessao);
                         ps2.executeUpdate();
+                        System.out.println("Id da sessao no update" + idsessao);
                    }
                    catch (Exception e){
                 

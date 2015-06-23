@@ -14,6 +14,11 @@ public class ResolucaoFrame extends javax.swing.JFrame {
     /**
      * Creates new form ResolucaoFrame
      */
+    int idpergunta;
+    public void getidpergunta (int id){
+        idpergunta = id;
+    }
+    
     public ResolucaoFrame() {
         initComponents();
     }
@@ -45,6 +50,11 @@ public class ResolucaoFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(campoResolucao);
 
         botaoProxima.setText("Sair");
+        botaoProxima.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoProximaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -83,6 +93,10 @@ public class ResolucaoFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void botaoProximaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProximaActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_botaoProximaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -120,8 +134,8 @@ public class ResolucaoFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoProxima;
-    private javax.swing.JTextField campoPergunta;
-    private javax.swing.JTextArea campoResolucao;
+    public javax.swing.JTextField campoPergunta;
+    public javax.swing.JTextArea campoResolucao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
