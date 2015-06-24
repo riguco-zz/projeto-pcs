@@ -37,7 +37,7 @@ public class ResolucaoFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         campoResolucao = new javax.swing.JTextArea();
-        botaoProxima = new javax.swing.JButton();
+        botaoSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,10 +49,10 @@ public class ResolucaoFrame extends javax.swing.JFrame {
         campoResolucao.setRows(5);
         jScrollPane1.setViewportView(campoResolucao);
 
-        botaoProxima.setText("Sair");
-        botaoProxima.addActionListener(new java.awt.event.ActionListener() {
+        botaoSair.setText("Sair");
+        botaoSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoProximaActionPerformed(evt);
+                botaoSairActionPerformed(evt);
             }
         });
 
@@ -63,7 +63,7 @@ public class ResolucaoFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(botaoProxima)
+                    .addComponent(botaoSair)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
@@ -86,16 +86,17 @@ public class ResolucaoFrame extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
-                .addComponent(botaoProxima)
+                .addComponent(botaoSair)
                 .addGap(24, 24, 24))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botaoProximaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoProximaActionPerformed
-        this.setVisible(false);
-    }//GEN-LAST:event_botaoProximaActionPerformed
+    private void botaoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSairActionPerformed
+        dispose();
+        //this.setVisible(false);
+    }//GEN-LAST:event_botaoSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,7 +134,7 @@ public class ResolucaoFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botaoProxima;
+    private javax.swing.JButton botaoSair;
     public javax.swing.JTextField campoPergunta;
     public javax.swing.JTextArea campoResolucao;
     private javax.swing.JLabel jLabel1;

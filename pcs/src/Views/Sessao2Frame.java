@@ -254,10 +254,10 @@ public class Sessao2Frame extends javax.swing.JFrame {
                
                         String sqlupdatesessao = "update sessao set data_fim=?, acertos=? where id_sessao=?";
 
-                        Date hoje = new Date(); 
-                        java.sql.Date hojesql = new java.sql.Date(hoje.getTime());
+                        Date hoje = new Date();
+                        java.sql.Timestamp hojesql = new java.sql.Timestamp(hoje.getTime());
                         PreparedStatement ps2 = conn.prepareStatement(sqlupdatesessao);
-                        ps2.setDate(1, hojesql);
+                        ps2.setTimestamp(1, hojesql);
                         ps2.setInt(2, quantidadeacertos);
                         ps2.setInt(3, idsessao);
                         ps2.executeUpdate();
@@ -268,10 +268,20 @@ public class Sessao2Frame extends javax.swing.JFrame {
                 System.out.println(e.getMessage());
 
             }
-                   
-                   
-                   JOptionPane.showMessageDialog(null, "parabéns você acertou " + quantidadeacertos + " de " + totaldequestoes);
+                   float porcentagem;
+                   porcentagem = ((quantidadeacertos * 100)/totaldequestoes);
+                    if(porcentagem == 0)
+                            JOptionPane.showMessageDialog(null, "Volta pro cu de onde vc saiu! Você acertou " + quantidadeacertos + " de " + totaldequestoes);
+                    if(porcentagem > 0 && porcentagem <= 40)
+                            JOptionPane.showMessageDialog(null, "Você precisa estudar MAIS! Você acertou " + quantidadeacertos + " de " + totaldequestoes);
+                    if(porcentagem > 40 && porcentagem <= 70)
+                            JOptionPane.showMessageDialog(null, "Você foi bem, mas ainda pode Melhorar! Você acertou " + quantidadeacertos + " de " + totaldequestoes);
+                    if(porcentagem > 70 && porcentagem < 100)
+                            JOptionPane.showMessageDialog(null, "Parabéns! Você foi Muito BEM! Você acertou " + quantidadeacertos + " de " + totaldequestoes);
+                    if(porcentagem == 100)
+                            JOptionPane.showMessageDialog(null, "UAU!!! Você é SENSACIONAL! Você acertou " + quantidadeacertos + " de " + totaldequestoes);
                     AlunoFrame mm = new AlunoFrame();
+                    mm.getid(idaluno);
                     mm.show();
                     mm.setLocationRelativeTo(null);
                     mm.setResizable(false);

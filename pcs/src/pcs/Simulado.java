@@ -11,7 +11,7 @@ import Views.LoginFrame;
  *
  * @author riguco
  */
-public class Pcs {
+public class Simulado {
 
     public static void main(String[] args) {
         new LoginFrame(null, true).show();

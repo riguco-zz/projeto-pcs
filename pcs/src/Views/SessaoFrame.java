@@ -12,6 +12,7 @@ import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -162,17 +163,15 @@ public class SessaoFrame extends javax.swing.JFrame {
             String sqlinsertesessao = "insert into sessao (id_pessoa, data_inicio, tipoquestao, nivel)"
                 + "values(?,?,?,?)";
             
-                Date hoje = new Date(); 
-                java.sql.Date hojesql = new java.sql.Date(hoje.getTime());
                 
-                //Locale locale = new Locale("pt","BR");
-                //GregorianCalendar calendar = new GregorianCalendar();
-                //SimpleDateFormat formatador = new SimpleDateFormat("'dd' de 'MMMMM' de 'yyyy' - 'HH':'mm'h'",locale);
+                Date hoje = new Date();
+                java.sql.Timestamp hojesql = new java.sql.Timestamp(hoje.getTime());
                 
+                             
                 //System.out.println("Variavel Formatador" + formatador);
                 ps = conn.prepareStatement(sqlinsertesessao, Statement.RETURN_GENERATED_KEYS);
                 ps.setInt(1, idaluno);
-                ps.setDate(2, hojesql);
+                ps.setTimestamp(2, hojesql);
                 ps.setInt(3, comboTipo.getSelectedIndex());
                 ps.setInt(4, comboNivel.getSelectedIndex());
                 ps.executeUpdate();
@@ -180,7 +179,7 @@ public class SessaoFrame extends javax.swing.JFrame {
                 rs.next();
                 int idsessao = rs.getInt(1);
                 
-                System.out.println("idsessao: " + idsessao);
+                
                    
             this.setVisible(false);
             Sessao2Frame mm = new Sessao2Frame();

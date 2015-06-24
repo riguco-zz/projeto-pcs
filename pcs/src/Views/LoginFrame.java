@@ -49,6 +49,7 @@ Connection conn = new criaConexao().connect();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        botaoSobre = new javax.swing.JButton();
 
         jPasswordField1.setText("jPasswordField1");
 
@@ -104,6 +105,14 @@ Connection conn = new criaConexao().connect();
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 12, -1, -1));
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, -1, -1));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 60, 20));
+
+        botaoSobre.setText("Sobre");
+        botaoSobre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSobreActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botaoSobre, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -168,6 +177,10 @@ Connection conn = new criaConexao().connect();
                 mm.show(); 
     }//GEN-LAST:event_botaoNovoActionPerformed
 
+    private void botaoSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSobreActionPerformed
+        JOptionPane.showMessageDialog(null, "Descrição: Aplicação para Aprendizado de Potenciação e Radiciação\nPublico Alvo: Alunos do Ensino Fundamental\nDesenvolvedores: Aline Guedes, Ricardo Conte e Thadeu Gonçalves\nVersão:5.0\n                           Todos os Direitos Reservados");
+    }//GEN-LAST:event_botaoSobreActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -215,6 +228,7 @@ Connection conn = new criaConexao().connect();
     private javax.swing.JButton botaoEntrar;
     private javax.swing.JButton botaoNovo;
     private javax.swing.JButton botaoSair;
+    private javax.swing.JButton botaoSobre;
     public static javax.swing.JTextField campoEmail;
     private javax.swing.JPasswordField campoSenha;
     private javax.swing.JDesktopPane jDesktopPane1;

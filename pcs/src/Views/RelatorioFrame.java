@@ -73,9 +73,12 @@ public class RelatorioFrame extends javax.swing.JFrame {
                     porcentagem = ((acertos * 100)/totaldequestoes);
                 }
                 else 
-                    porcentagem = 0;
+                porcentagem = 0;
                 System.out.println("Porcentagem " + porcentagem);
-                model.addRow(new Object[]{rs.getInt("id_sessao"), rs.getDate("data_inicio"), rs.getDate("data_fim"), "10", tipostring, nivelstring, rs2.getInt("totaldequestoes"), rs.getInt("acertos"), porcentagem});
+                
+                //String tempototal = DateUtils.getRelativeTimeSpanString();
+                
+                model.addRow(new Object[]{rs.getInt("id_sessao"), rs.getTimestamp("data_inicio"), rs.getTimestamp("data_fim"), "10", tipostring, nivelstring, rs2.getInt("totaldequestoes"), rs.getInt("acertos"), porcentagem});
 
 
 
@@ -112,6 +115,7 @@ public class RelatorioFrame extends javax.swing.JFrame {
         campoID = new javax.swing.JTextField();
         botaoConsultar = new javax.swing.JButton();
         botaoVoltar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -143,6 +147,8 @@ public class RelatorioFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Para Consultar a Sessão");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,9 +158,12 @@ public class RelatorioFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -175,13 +184,15 @@ public class RelatorioFrame extends javax.swing.JFrame {
                     .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(campoID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoConsultar)
                     .addComponent(botaoVoltar))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
 
         pack();
@@ -225,9 +236,11 @@ public class RelatorioFrame extends javax.swing.JFrame {
 
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
         this.dispose();
-            AlunoFrame mm = new AlunoFrame();
-            mm.show();
-            mm.setLocationRelativeTo(null);
+        AlunoFrame mm = new AlunoFrame();
+        mm.getid(idaluno);
+        mm.setResizable(false);
+        mm.setLocationRelativeTo(null);
+        mm.show();
     }//GEN-LAST:event_botaoVoltarActionPerformed
 
     /**
@@ -274,6 +287,7 @@ public class RelatorioFrame extends javax.swing.JFrame {
     public javax.swing.JTextField campoNome;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
