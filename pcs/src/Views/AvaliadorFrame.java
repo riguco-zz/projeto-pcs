@@ -5,7 +5,10 @@
  */
 package Views;
 
+import BDConexao.criaConexao;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,10 +16,15 @@ import javax.swing.JOptionPane;
  * @author riguco
  */
 public class AvaliadorFrame extends javax.swing.JFrame {
-
+    Connection conn = new criaConexao().connect();
     /**
      * Creates new form AvaliadorFrame
      */
+    int idaluno;
+    public void getid (int pessoaid){
+        idaluno = pessoaid;
+        
+    }
     public AvaliadorFrame() {
         initComponents();
     }
@@ -45,6 +53,11 @@ public class AvaliadorFrame extends javax.swing.JFrame {
         });
 
         botaoRelatorio.setText("Relatório Alunos");
+        botaoRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoRelatorioActionPerformed(evt);
+            }
+        });
 
         botaoSair.setText("Sair");
         botaoSair.addActionListener(new java.awt.event.ActionListener() {
@@ -112,9 +125,39 @@ public class AvaliadorFrame extends javax.swing.JFrame {
        
        this.dispose();
                     QuestaoFrame mm = new QuestaoFrame();
+                    mm.getid(idaluno);
                     mm.show();
                     mm.setLocationRelativeTo(null);
     }//GEN-LAST:event_botaoCadastrarActionPerformed
+
+    private void botaoRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRelatorioActionPerformed
+        this.setVisible(false);
+        String sql = "select * from pessoa where id_pessoa=?";
+        try {
+            PreparedStatement ps =conn.prepareStatement(sql);
+            ps.setInt(1, idaluno);
+            ResultSet rs = ps.executeQuery();
+            
+            
+            
+            if (rs.next()){
+                Relatorio2Frame mm = new Relatorio2Frame();
+                mm.getid(idaluno);
+                mm.getnome(rs.getString("nome"));
+                mm.preenchertabela();
+                mm.campoNome.setText(rs.getString("nome"));
+                mm.campoNome.setEditable(false);
+                mm.show();
+                mm.setLocationRelativeTo(null);
+
+
+            }
+        }
+        
+        catch (Exception e){
+        System.out.println(e.getMessage());        
+        }
+    }//GEN-LAST:event_botaoRelatorioActionPerformed
 
     /**
      * @param args the command line arguments

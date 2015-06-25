@@ -106,13 +106,13 @@ Connection conn = new criaConexao().connect();
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, -1, -1));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 60, 20));
 
-        botaoSobre.setText("Sobre");
+        botaoSobre.setText("?");
         botaoSobre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoSobreActionPerformed(evt);
             }
         });
-        getContentPane().add(botaoSobre, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, -1, -1));
+        getContentPane().add(botaoSobre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -127,10 +127,11 @@ Connection conn = new criaConexao().connect();
             if (rs.next()){
                 int perfil = rs.getInt("avaliador");
                 int pessoaid = rs.getInt("id_pessoa");
-                System.out.println("pessoa ID " + pessoaid);
+                
                 if(perfil == 1){
                     this.dispose();
                     AvaliadorFrame mm = new AvaliadorFrame();
+                    mm.getid(pessoaid);
                     mm.setResizable(false);
                     mm.setLocationRelativeTo(null);
                     mm.show();

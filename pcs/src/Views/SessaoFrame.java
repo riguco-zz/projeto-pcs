@@ -139,8 +139,11 @@ public class SessaoFrame extends javax.swing.JFrame {
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
         this.dispose();
             AlunoFrame mm = new AlunoFrame();
-                mm.show();
-                mm.setLocationRelativeTo(null);
+            mm.getid(idaluno);
+            mm.setResizable(false);
+            mm.setLocationRelativeTo(null);
+            mm.show();
+                
         
     }//GEN-LAST:event_botaoVoltarActionPerformed
 

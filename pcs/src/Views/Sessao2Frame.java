@@ -345,6 +345,7 @@ public class Sessao2Frame extends javax.swing.JFrame {
          
            this.dispose();
                 AlunoFrame mm = new AlunoFrame();
+                    mm.getid(idaluno);
                     mm.show();
                     mm.setLocationRelativeTo(null);
                     mm.setResizable(false);

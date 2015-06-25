@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author riguco
  */
-public class Resolucao2Frame extends javax.swing.JFrame {
+public class Resolucao2Frame2 extends javax.swing.JFrame {
     Connection conn = new criaConexao().connect();
     /**
      * Creates new form Resolucao2Frame
@@ -34,7 +34,7 @@ public class Resolucao2Frame extends javax.swing.JFrame {
     
     }
     
-    public Resolucao2Frame() {
+    public Resolucao2Frame2() {
         initComponents();
     }
     
@@ -124,7 +124,7 @@ public class Resolucao2Frame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID Pergunta", "Pergunta", "Acertou"
+                "ID", "Pergunta", "Acertou"
             }
         ));
         jScrollPane1.setViewportView(resolucaoTable);
@@ -196,7 +196,7 @@ public class Resolucao2Frame extends javax.swing.JFrame {
             
             
         if (rs.next()){
-            RelatorioFrame mm = new RelatorioFrame();
+            Relatorio2Frame mm = new Relatorio2Frame();
             mm.getid(idaluno);
             mm.getnome(rs.getString("nome"));
             mm.preenchertabela();
@@ -266,21 +266,22 @@ public class Resolucao2Frame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Resolucao2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Resolucao2Frame2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Resolucao2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Resolucao2Frame2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Resolucao2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Resolucao2Frame2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Resolucao2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Resolucao2Frame2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Resolucao2Frame().setVisible(true);
+                new Resolucao2Frame2().setVisible(true);
             }
         });
     }

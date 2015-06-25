@@ -22,6 +22,12 @@ public class QuestaoFrame extends javax.swing.JFrame {
     /**
      * Creates new form QuestaoFrame
      */
+    int idavaliador;
+    public void getid (int pessoaid){
+        idavaliador = pessoaid;
+        
+    }
+    
     public QuestaoFrame() {
         initComponents();
     }
@@ -242,12 +248,17 @@ public class QuestaoFrame extends javax.swing.JFrame {
                     this.dispose();
                         QuestaoFrame mm = new QuestaoFrame();
                             mm.show();
-                }
+                            mm.getid(idavaliador);
+                            mm.setLocationRelativeTo(null);
+                            mm.setResizable(false);
+                }        
                 else{
                     this.dispose();
                         AvaliadorFrame mm = new AvaliadorFrame();
                             mm.show();
-                
+                            mm.getid(idavaliador);
+                            mm.setLocationRelativeTo(null);
+                            mm.setResizable(false);
                 }
                               
             }
@@ -265,6 +276,7 @@ public class QuestaoFrame extends javax.swing.JFrame {
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
        this.dispose();
                     AvaliadorFrame mm = new AvaliadorFrame();
+                    mm.getid(idavaliador);
                     mm.show();
                     mm.setLocationRelativeTo(null);
     }//GEN-LAST:event_botaoVoltarActionPerformed

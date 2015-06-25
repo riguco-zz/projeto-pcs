@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author riguco
  */
-public class RelatorioFrame extends javax.swing.JFrame {
+public class Relatorio2Frame extends javax.swing.JFrame {
     Connection conn = new criaConexao().connect();
     /**
      * Creates new form RelatorioFrame
@@ -34,14 +34,15 @@ public class RelatorioFrame extends javax.swing.JFrame {
     
     }
     
-   
     public void preenchertabela(){
-    String sql = "SELECT *, timediff(data_fim, data_inicio) as tempo FROM sessao where id_pessoa=?";
+        String sql = "select sessao.id_sessao, sessao.data_inicio, sessao.data_fim, sessao.tipoquestao, sessao.nivel, sessao.acertos, pessoa.nome, pessoa.email, timediff(sessao.data_fim, sessao.data_inicio) as tempo\n" +
+                     "from sessao\n" +
+                     "inner join pessoa\n" +
+                     "on sessao.id_pessoa=pessoa.id_pessoa;";
         String sql2 = "select count(*) as totaldequestoes from resposta where id_sessao=?";
         
         try {
             PreparedStatement ps =conn.prepareStatement(sql);
-            ps.setInt(1, idaluno);
             ResultSet rs = ps.executeQuery();
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             
@@ -76,10 +77,8 @@ public class RelatorioFrame extends javax.swing.JFrame {
                 else 
                 porcentagem = 0;
                 System.out.println("Porcentagem " + porcentagem);
-                
-                //String tempototal = DateUtils.getRelativeTimeSpanString();
-                
-                model.addRow(new Object[]{rs.getInt("id_sessao"), rs.getTimestamp("data_inicio"), rs.getTimestamp("data_fim"), new SimpleDateFormat("HH:mm:ss").format(rs.getTimestamp("tempo")), tipostring, nivelstring, rs2.getInt("totaldequestoes"), rs.getInt("acertos"), porcentagem});
+                                            
+                model.addRow(new Object[]{rs.getInt("id_sessao"), rs.getString("nome"), rs.getString("email"), rs.getTimestamp("data_inicio"), rs.getTimestamp("data_fim"), new SimpleDateFormat("HH:mm:ss").format(rs.getTimestamp("tempo")), tipostring, nivelstring, rs2.getInt("totaldequestoes"), rs.getInt("acertos"), porcentagem});
 
 
 
@@ -91,9 +90,8 @@ public class RelatorioFrame extends javax.swing.JFrame {
         System.out.println(e.getMessage());        
         }
         
-    }
-    
-    public RelatorioFrame() {
+}  
+    public Relatorio2Frame() {
         initComponents();
         
         
@@ -128,7 +126,7 @@ public class RelatorioFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID Sessao", "Data Inicio", "Data Fim", "Tempo Total", "Tipo", "Nível", "Qtd.", "Acertos", "%"
+                "ID Sessão", "Nome", "E-mail", "Data Inicio", "Data Fim", "Tempo Total", "Tipo", "Nível", "Qtd.", "Acertos", "%"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -210,17 +208,21 @@ public class RelatorioFrame extends javax.swing.JFrame {
             valor=Integer.parseInt(s);
             System.out.println("valor no campo" + valor);
             
-            String sqlrelatorio = "select * from resposta where id_sessao=?";
+            String sqlrelatorio = "select resposta.id_sessao, resposta.id_pergunta, resposta.acertou, resposta.resposta, pessoa.nome\n" +
+                                  "from resposta, pessoa, sessao\n" +
+                                  "where sessao.id_sessao =? \n" +
+                                  "and sessao.id_sessao = resposta.id_sessao\n" +
+                                  "and pessoa.id_pessoa=sessao.id_pessoa;";
             try {
                 PreparedStatement ps =conn.prepareStatement(sqlrelatorio);
                 ps.setInt(1, valor);
                 ResultSet rs = ps.executeQuery();
 
             if (rs.next()){
-                Resolucao2Frame mm = new Resolucao2Frame();
+                Resolucao2Frame2 mm = new Resolucao2Frame2();
                 mm.getid(idaluno);
                 mm.getsessao(valor);
-                mm.campoNome.setText(Nome);
+                mm.campoNome.setText(rs.getString("nome"));
                 mm.campoNome.setEditable(false);
                 mm.preenchertabela();
                 mm.show();
@@ -238,7 +240,7 @@ public class RelatorioFrame extends javax.swing.JFrame {
 
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
         this.dispose();
-        AlunoFrame mm = new AlunoFrame();
+        AvaliadorFrame mm = new AvaliadorFrame();
         mm.getid(idaluno);
         mm.setResizable(false);
         mm.setLocationRelativeTo(null);
@@ -262,20 +264,21 @@ public class RelatorioFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RelatorioFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Relatorio2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RelatorioFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Relatorio2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RelatorioFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Relatorio2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RelatorioFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Relatorio2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RelatorioFrame().setVisible(true);
+                new Relatorio2Frame().setVisible(true);
                 
                  
             }
